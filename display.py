@@ -74,6 +74,83 @@ class Display :
               , 0b00000000
               )
             )
+          , ( '\u00e6' # LATIN SMALL LETTER AE
+            , ( 0b00000000
+              , 0b00000000
+              , 0b00011011
+              , 0b00000101
+              , 0b00011111
+              , 0b00010100
+              , 0b00011011
+              , 0b00000000
+              )
+            )
+          , ( '\u00f8' # LATIN SMALL LETTER O WITH STROKE
+            , ( 0b00000000
+              , 0b00000000
+              , 0b00001110
+              , 0b00010011
+              , 0b00010101
+              , 0b00011001
+              , 0b00001110
+              , 0b00000000
+              )
+            )
+          , ( '\u00e2' # LATIN SMALL LETTER A WITH CIRCUMFLEX
+            , ( 0b00000100
+              , 0b00001010
+              , 0b00001110
+              , 0b00000001
+              , 0b00001111
+              , 0b00010001
+              , 0b00001111
+              , 0b00000000
+              )
+            )
+          , ( '\u00e5' # LATIN SMALL LETTER A WITH RING ABOVE
+            , ( 0b00001110
+              , 0b00001010
+              , 0b00001110
+              , 0b00000001
+              , 0b00001111
+              , 0b00010001
+              , 0b00001111
+              , 0b00000000
+              )
+            )
+          , ( '\u00c6' # LATIN CAPITAL LETTER AE
+            , ( 0b00001111
+              , 0b00010100
+              , 0b00010100
+              , 0b00011111
+              , 0b00010100
+              , 0b00010100
+              , 0b00010111
+              , 0b00000000
+              )
+            )
+          , ( '\u00d8' # LATIN CAPITAL LETTER O WITH STROKE
+            , ( 0b00001110
+              , 0b00010011
+              , 0b00010101
+              , 0b00010101
+              , 0b00010101
+              , 0b00011001
+              , 0b00001110
+              , 0b00000000
+              )
+            )
+          , ( '\u00c5' # LATIN CAPITAL LETTER A WITH RING ABOVE
+            , ( 0b00000100
+              , 0b00001010
+              , 0b00010101
+              , 0b00010001
+              , 0b00011111
+              , 0b00010001
+              , 0b00010001
+              , 0b00000000
+              )
+            )
           )
         )
 
@@ -121,7 +198,6 @@ class Display :
 
     def define_glyph (self, code, data) :
         assert 0 <= code <= 7
-        print (len (data))
         assert len (data) == 8
         self.write ('\x1b[LG%d' % code)
         for byte in data :
@@ -139,9 +215,17 @@ if __name__ == '__main__' :
     d.define_glyph (0, d.ram_chars ['\u00c4'])
     d.define_glyph (1, d.ram_chars ['\u00d6'])
     d.define_glyph (2, d.ram_chars ['\u00dc'])
+    d.define_glyph (0, d.ram_chars ['\u00e6'])
+    d.define_glyph (1, d.ram_chars ['\u00f8'])
+    d.define_glyph (2, d.ram_chars ['\u00e5'])
+    d.define_glyph (3, d.ram_chars ['\u00c6'])
+    d.define_glyph (4, d.ram_chars ['\u00d8'])
+    d.define_glyph (5, d.ram_chars ['\u00c5'])
+    d.define_glyph (6, d.ram_chars ['\u00e2'])
     d.esc_clear ()
+    d.write (b'\x00\x01\x02\x03\x04\x05\06')
     #d.write (b'\x00A \x01O \x02U ')
-    d.write (b'-\xb0')
+    #d.write (b'-\xb0')
     if len (sys.argv) > 1 :
         d.write (' '.join (sys.argv [1:]))
     else :
